@@ -23,8 +23,28 @@ class Payment {
     }
 
     // view payment
-    public function view_payments() {
-        
+    public function view_payments($tenant_id) {
+        global $db;
+
+        $payment = array();
+        $payments = array();
+
+        $sql = "select id, amount, description, date, status from payments where tenant_id = ?";
+        if(!$stmt = $db->query($sql))
+            return false;
+        $stmt->bind_param('i', $tenant_id);
+        $stmt->execute();
+        $stmt->bind_result($id, $amount, $description, $date, $status);
+        while($stmt->fetch()) {
+            $date_timestamp = strtotime($date);
+            $date = strftime('%D', $date_timestamp);
+
+            array_push($payment, $id, $amount, $description, $date, $status);
+            array_push($payments, $payment);
+            $payment = array();
+        }
+
+        return $payments;
     }
 
     // update payment
