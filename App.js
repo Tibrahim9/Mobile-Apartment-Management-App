@@ -2,21 +2,68 @@ import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
+
 import { Home } from './app/views/Home';
-import { Login } from './app/views/Login';
-import { Register } from './app/views/Register';
-import { TenantHome } from './app/views/TenantHome';
-import { CreateProfile } from './app/views/CreateProfile';
-import { Maintenance } from './app/views/Maintenance';
-import { MaintenanceRequest } from './app/views/MaintenanceRequest';
-import { MaintenanceRequestView } from './app/views/MaintenanceRequestView';
-import { MaintenanceRequestList } from './app/manager/MaintenanceRequestList';
-import { Payment } from './app/views/Payment';
-import { PaymentHistory } from './app/views/PaymentHistory';
+
+import { Login } from './app/views/tenant/Login';
+import { Register } from './app/views/tenant/Register';
+import { CreateProfile } from './app/views/tenant/CreateProfile';
+import { TenantHome } from './app/views/tenant/Home';
+import { Maintenance } from './app/views/tenant/Maintenance';
+import { MaintenanceRequest } from './app/views/tenant/MaintenanceRequest';
+import { MaintenanceRequestView } from './app/views/tenant/MaintenanceRequestView';
+import { Payment } from './app/views/tenant/Payment';
+import { PaymentHistory } from './app/views/tenant/PaymentHistory';
+
+import { ManagerHome } from './app/views/manager/Home';
+import { ManagerLogin } from './app/views/manager/Login';
+import { MaintenanceRequestList } from './app/views/manager/MaintenanceRequestList';
 
 const MyRoutes = StackNavigator({
   HomeScreen: {
     screen: Home,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#1d64b4'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  ManagerHomeScreen: {
+    screen: ManagerHome,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#1d64b4'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  LoginScreen: {
+    screen: Login,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#1d64b4'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  ManagerLoginScreen: {
+    screen: ManagerLogin,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
@@ -85,21 +132,6 @@ const MyRoutes = StackNavigator({
       headerTintColor: '#fff'
     }
   },
-  LoginScreen: {
-    screen: Login,
-    navigationOptions: {
-      title: 'ApartmentApp',
-      headerTitleStyle: {
-        fontSize: 28,
-        fontWeight: '500'
-      },
-      headerStyle: {
-        backgroundColor: '#1d64b4'
-      },
-      headerTintColor: '#fff'
-    }
-  },
-
   RegisterScreen: {
     screen: Register,
     navigationOptions: {
