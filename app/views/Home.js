@@ -51,6 +51,11 @@ export class Home extends React.Component {
                             onPress={() => this.props.navigation.navigate('RegisterScreen')}>
                             <Text style={ styles.buttonText }>REGISTER</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity
+                            style={ styles.button }
+                            onPress={() => this.props.navigation.navigate('ManagerLoginScreen')}>
+                            <Text style={ styles.buttonText }>MANAGER</Text>
+                        </TouchableOpacity>
                     </View>
             </View>
         );
