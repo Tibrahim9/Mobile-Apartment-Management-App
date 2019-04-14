@@ -55,8 +55,22 @@ export class TenantHome extends React.Component {
                 {/* <Image
                     source={ require('../images/tenant-home-background-image.jpg') }
                     style={ styles.mainImage } /> */}
-                <View style={{ flex: 1, justifyContent: 'center' }}>
+                <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }}>
                     <Text style={ styles.titleTextStyle }>Hello { this.state.first_name }!</Text>
+                    <TouchableOpacity
+                        onPress={ () => this.props.navigation.push('MaintenanceScreen', {
+                            tenant_id: this.state.tenant_id,
+                            email: this.state.email,
+                            first_name: this.state.first_name,
+                            last_name: this.state.last_name,
+                            mobile_number: this.state.mobile_number,
+                            room_number: this.state.room_number,
+                            building_id: this.state.building_id
+                        }) }
+                        style={{ alignSelf: 'center', marginRight: 16 }}>
+                        <Image
+                            source={ require('../../images/user-icon.png') } />
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 6 }}>
                     <View style={ styles.boxStyle }>
@@ -140,7 +154,15 @@ export class TenantHome extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
-                            onPress={ () => {alert("pressed")} } >
+                            onPress={ () => this.props.navigation.push('InformationScreen', {
+                                tenant_id: this.state.tenant_id,
+                                email: this.state.email,
+                                first_name: this.state.first_name,
+                                last_name: this.state.last_name,
+                                mobile_number: this.state.mobile_number,
+                                room_number: this.state.room_number,
+                                building_id: this.state.building_id
+                            }) } >
                             <Text style={{
                                 alignSelf: 'stretch',
                                 fontSize: 20,
@@ -219,8 +241,11 @@ const styles = StyleSheet.create({
     },
     titleTextStyle: {
         alignSelf: 'center',
+        textAlign: 'center',
         padding: 12,
-        fontSize: 24
+        marginLeft: 8,
+        fontSize: 24,
+        flexGrow: 1
     },
     buttonContainer: {
         margin: 8,
