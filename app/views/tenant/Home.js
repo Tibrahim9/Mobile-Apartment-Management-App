@@ -131,27 +131,27 @@ export class TenantHome extends React.Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={ styles.boxStyle }>
-                        <TouchableOpacity
-                            style={ styles.selectionStyle }
-                            onPress={ () => {alert("pressed")} } >
-                            <Text style={{
-                                alignSelf: 'stretch',
-                                fontSize: 20,
-                                padding: 4,
-                                backgroundColor: '#FFF',
-                                textAlign: 'center',
-                                color: '#fff',
-                                backgroundColor: '#3796E3',
-                                borderTopLeftRadius: 7,
-                                borderTopRightRadius: 7
-                            }}>Chat</Text>
-                            <View style={{ height: '100%', width: '100%' }}>
-                                <Image
-                                    source={ require('../../images/chat-image.jpg') }
-                                    style={ styles.selectionImage } />
-                            </View>
-                        </TouchableOpacity>
+                   <View style={ styles.boxStyle }>
+                                                 <TouchableOpacity
+                                                     style={ styles.selectionStyle }
+                                                     onPress={ () => { this.props.navigation.navigate('MyChatScreen') } } >
+                                                     <Text style={{
+                                                         alignSelf: 'stretch',
+                                                         fontSize: 20,
+                                                         padding: 4,
+                                                         backgroundColor: '#FFF',
+                                                         textAlign: 'center',
+                                                         color: '#fff',
+                                                         backgroundColor: '#3796E3',
+                                                         borderTopLeftRadius: 7,
+                                                         borderTopRightRadius: 7
+                                                     }}>Chat</Text>
+                                                     <View style={{ height: '100%', width: '100%' }}>
+                                                         <Image
+                                                             source={ require('../../images/chat-image.jpg') }
+                                                             style={ styles.selectionImage } />
+                                                     </View>
+                                                 </TouchableOpacity>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
                             onPress={ () => this.props.navigation.push('InformationScreen', {
