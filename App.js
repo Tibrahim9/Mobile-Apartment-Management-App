@@ -14,7 +14,7 @@ import { MaintenanceRequest } from './app/views/tenant/MaintenanceRequest';
 import { MaintenanceRequestView } from './app/views/tenant/MaintenanceRequestView';
 import { Payment } from './app/views/tenant/Payment';
 import { PaymentHistory } from './app/views/tenant/PaymentHistory';
-
+import MyChat from "./app/views/tenant/MyChat";
 import { ManagerHome } from './app/views/manager/Home';
 import { ManagerLogin } from './app/views/manager/Login';
 import { MaintenanceRequestList } from './app/views/manager/MaintenanceRequestList';
@@ -50,6 +50,20 @@ const MyRoutes = StackNavigator({
   },
   LoginScreen: {
     screen: Login,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#1d64b4'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  MyChatScreen: {
+    screen: MyChat,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
