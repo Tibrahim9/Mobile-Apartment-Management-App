@@ -4,7 +4,7 @@ import React from "react";
     import { GiftedChat } from "react-native-gifted-chat";
   const CHATKIT_TOKEN_PROVIDER_ENDPOINT = "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/cc8f529f-2187-47a8-a93d-2e232edd08d0/token";
     const CHATKIT_INSTANCE_LOCATOR = "v1:us1:cc8f529f-2187-47a8-a93d-2e232edd08d0";
-  const CHATKIT_ROOM_ID =  "19430443";
+  const CHATKIT_ROOM_ID =  "19430444";
     const CHATKIT_USER_NAME = "Nicholas Brodsky";
 
     export default class Chat extends React.Component {
