@@ -4,24 +4,61 @@ import { StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 
 import { Home } from './app/views/Home';
+import { Information } from './app/views/Information';
 
-import { Login } from './app/views/tenant/Login';
+// tenant view screens
+import { TenantLogin } from './app/views/tenant/Login';
 import { Register } from './app/views/tenant/Register';
-import { CreateProfile } from './app/views/tenant/CreateProfile';
+import { TenantCreateProfile } from './app/views/tenant/CreateProfile';
 import { TenantHome } from './app/views/tenant/Home';
 import { Maintenance } from './app/views/tenant/Maintenance';
 import { MaintenanceRequest } from './app/views/tenant/MaintenanceRequest';
 import { MaintenanceRequestView } from './app/views/tenant/MaintenanceRequestView';
-import { Payment } from './app/views/tenant/Payment';
+import { TenantPayment } from './app/views/tenant/Payment';
 import { PaymentHistory } from './app/views/tenant/PaymentHistory';
-import MyChat from "./app/views/tenant/MyChat";
+import { SubmitPayment } from './app/views/tenant/SubmitPayment';
+
+// manager view screens
 import { ManagerHome } from './app/views/manager/Home';
 import { ManagerLogin } from './app/views/manager/Login';
-import { MaintenanceRequestList } from './app/views/manager/MaintenanceRequestList';
+import { ManagerCreateProfile } from './app/views/manager/CreateProfile';
+import { MaintenanceEdit } from './app/views/manager/Maintenance';
+import { ManagerPayment } from './app/views/manager/Payment';
+import { PaymentEdit } from './app/views/manager/PaymentEdit';
+import { PaymentRequest } from './app/views/manager/PaymentRequest';
 
 const MyRoutes = StackNavigator({
+  InformationScreen: {
+    screen: Information,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#1d64b4'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  // Home Screens
   HomeScreen: {
     screen: Home,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#1d64b4'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  TenantHomeScreen: {
+    screen: TenantHome,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
@@ -43,13 +80,15 @@ const MyRoutes = StackNavigator({
         fontWeight: '500'
       },
       headerStyle: {
-        backgroundColor: '#1d64b4'
+        backgroundColor: '#128ACC'
       },
       headerTintColor: '#fff'
     }
   },
-  LoginScreen: {
-    screen: Login,
+  // Login/Register Screens
+  // Tenant
+  TenantLoginScreen: {
+    screen: TenantLogin,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
@@ -62,8 +101,8 @@ const MyRoutes = StackNavigator({
       headerTintColor: '#fff'
     }
   },
-  MyChatScreen: {
-    screen: MyChat,
+  RegisterScreen: {
+    screen: Register,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
@@ -76,6 +115,7 @@ const MyRoutes = StackNavigator({
       headerTintColor: '#fff'
     }
   },
+  // Manager
   ManagerLoginScreen: {
     screen: ManagerLogin,
     navigationOptions: {
@@ -85,11 +125,58 @@ const MyRoutes = StackNavigator({
         fontWeight: '500'
       },
       headerStyle: {
+        backgroundColor: '#128ACC'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  // Create Profile Screens
+  TenantCreateProfileScreen: {
+    screen: TenantCreateProfile,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
         backgroundColor: '#1d64b4'
       },
       headerTintColor: '#fff'
     }
   },
+  ManagerCreateProfileScreen: {
+    screen: ManagerCreateProfile,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#128ACC'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+
+  // Maintenance Screens
+  // Manager
+  MaintenanceEditScreen: {
+    screen: MaintenanceEdit,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#128ACC'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  // Tenant
   MaintenanceScreen: {
     screen: Maintenance,
     navigationOptions: {
@@ -127,13 +214,15 @@ const MyRoutes = StackNavigator({
         fontWeight: '500'
       },
       headerStyle: {
-        backgroundColor: '#D5D708'
+        backgroundColor: '#1d64b4'
       },
       headerTintColor: '#fff'
     }
   },
-  MaintenanceRequestListScreen: {
-    screen: MaintenanceRequestList,
+  // Payment screens
+  // Manager
+  ManagerPaymentScreen: {
+    screen: ManagerPayment,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
@@ -141,13 +230,42 @@ const MyRoutes = StackNavigator({
         fontWeight: '500'
       },
       headerStyle: {
-        backgroundColor: '#D5D708'
+        backgroundColor: '#128ACC'
       },
       headerTintColor: '#fff'
     }
   },
-  RegisterScreen: {
-    screen: Register,
+  PaymentEditScreen: {
+    screen: PaymentEdit,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#128ACC'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  PaymentRequestScreen: {
+    screen: PaymentRequest,
+    navigationOptions: {
+      title: 'ApartmentApp',
+      headerTitleStyle: {
+        fontSize: 28,
+        fontWeight: '500'
+      },
+      headerStyle: {
+        backgroundColor: '#128ACC'
+      },
+      headerTintColor: '#fff'
+    }
+  },
+  // Tenant
+  TenantPaymentScreen: {
+    screen: TenantPayment,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
@@ -156,35 +274,6 @@ const MyRoutes = StackNavigator({
       },
       headerStyle: {
         backgroundColor: '#1d64b4'
-      },
-      headerTintColor: '#fff'
-    }
-  },
-
-  CreateProfileScreen: {
-    screen: CreateProfile,
-    navigationOptions: {
-      title: 'ApartmentApp',
-      headerTitleStyle: {
-        fontSize: 28,
-        fontWeight: '500'
-      },
-      headerStyle: {
-        backgroundColor: '#1d64b4'
-      },
-      headerTintColor: '#fff'
-    }
-  },
-  PaymentScreen: {
-    screen: Payment,
-    navigationOptions: {
-      title: 'ApartmentApp',
-      headerTitleStyle: {
-        fontSize: 28,
-        fontWeight: '500'
-      },
-      headerStyle: {
-        backgroundColor: '#3FA3B2'
       },
       headerTintColor: '#fff'
     }
@@ -198,13 +287,13 @@ const MyRoutes = StackNavigator({
         fontWeight: '500'
       },
       headerStyle: {
-        backgroundColor: '#3FA3B2'
+        backgroundColor: '#1d64b4'
       },
       headerTintColor: '#fff'
     }
   },
-  TenantHomeScreen: {
-    screen: TenantHome,
+  SubmitPaymentScreen: {
+    screen: SubmitPayment,
     navigationOptions: {
       title: 'ApartmentApp',
       headerTitleStyle: {
