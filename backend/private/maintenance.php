@@ -80,21 +80,27 @@ class Maintenance {
         $maintenance_request = array();
         $maintenance_requests = array();
 
-        $sql = "select id, area, issue, level, status, date_requested, date_completed from maintenance where building_id = ? and not status = 4";
+        $sql = "select id, area, issue, level, status, date_requested, date_completed, tenant_id from maintenance where building_id = ? and not status = 4";
         if(!$stmt = $db->query($sql))
             return false;
         $stmt->bind_param('i', $building_id);
         $stmt->execute();
-        $stmt->bind_result($id, $area, $issue, $level, $status, $date_requested, $date_completed);
+        $stmt->bind_result($id, $area, $issue, $level, $status, $date_requested, $date_completed, $tenant_id);
         while($stmt->fetch()) {
 
             $date_requested_time_stamp = strtotime($date_requested);
             $date_requested = strftime('%D', $date_requested_time_stamp);
 
-            array_push($maintenance_request, $id, $area, $issue, $level, $status, $date_requested, $date_completed);
+            array_push($maintenance_request, $id, $area, $issue, $level, $status, $date_requested, $date_completed, $tenant_id);
             array_push($maintenance_requests, $maintenance_request);
             $maintenance_request = array();
         }
+
+        for($i = 0; $i < count($maintenance_requests); $i++) {
+            $tenant = self::get_tenant($maintenance_requests[$i][7]);
+            array_push($maintenance_requests[$i], $tenant);
+        }
+
         return $maintenance_requests;
     }
     public function view_previous_requests_manager($building_id) {
@@ -103,21 +109,27 @@ class Maintenance {
         $maintenance_request = array();
         $maintenance_requests = array();
 
-        $sql = "select id, area, issue, level, status, date_requested, date_completed from maintenance where building_id = ? AND status = 4";
+        $sql = "select id, area, issue, level, status, date_requested, date_completed, tenant_id from maintenance where building_id = ? AND status = 4";
         if(!$stmt = $db->query($sql))
             return false;
         $stmt->bind_param('i', $building_id);
         $stmt->execute();
-        $stmt->bind_result($id, $area, $issue, $level, $status, $date_requested, $date_completed);
+        $stmt->bind_result($id, $area, $issue, $level, $status, $date_requested, $date_completed, $tenant_id);
         while($stmt->fetch()) {
 
             $date_completed_timestamp = strtotime($date_completed);
             $date_completed = strftime('%D', $date_completed_timestamp);
 
-            array_push($maintenance_request, $id, $area, $issue, $level, $status, $date_requested, $date_completed);
+            array_push($maintenance_request, $id, $area, $issue, $level, $status, $date_requested, $date_completed, $tenant_id);
             array_push($maintenance_requests, $maintenance_request);
             $maintenance_request = array();
         }
+
+        for($i = 0; $i < count($maintenance_requests); $i++) {
+            $tenant = self::get_tenant($maintenance_requests[$i][7]);
+            array_push($maintenance_requests[$i], $tenant);
+        }
+
         return $maintenance_requests;
     }
     public function update_request_status($id, $new_status) {
@@ -161,6 +173,26 @@ class Maintenance {
         if(!$stmt->execute())
             return false;
         return true;
+    }
+    private static function get_tenant($tenant_id)
+    {
+        global $db;
+
+        $full_name = array();
+
+        $sql = "select first_name, last_name from tenants where id = ?";
+        if(!$stmt = $db->query($sql))
+            return false;
+        $stmt->bind_param('i', $tenant_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($first_name, $last_name);
+        $stmt->fetch();
+        if($stmt->num_rows < 1)
+            return false;
+        array_push($full_name, $first_name, $last_name);
+
+        return $full_name;
     }
 }
 

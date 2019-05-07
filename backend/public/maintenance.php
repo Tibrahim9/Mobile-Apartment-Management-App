@@ -19,7 +19,7 @@ try {
     $new_status = isset($obj['new_status']) ? $obj['new_status'] : 0;
     $date_requested = isset($obj['date_requested']) ? $obj['date_requested'] : null;
     $date_completed = isset($obj['date_completed']) ? $obj['date_completed'] : null;
-    $tenant_id = isset($obj['tenant_id']) ? $obj['tenant_id'] : '';
+    $tenant_id = isset($obj['tenant_id']) ? $obj['tenant_id'] : 0;
     $building_id = isset($obj['building_id']) ? $obj['building_id'] : 0;
 
     $option = isset($obj['option']) ?  $obj['option'] : '';
@@ -95,6 +95,7 @@ try {
         print json_encode([
             'success' => true
         ]);
+        exit;
     }
     if($option == 'remove_request') {
         $maintenance = new Maintenance();
@@ -108,6 +109,7 @@ try {
         print json_encode([
             'success' => true
         ]);
+        exit;
     }
 }
 catch(Exception $e) {

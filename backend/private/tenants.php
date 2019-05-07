@@ -17,6 +17,20 @@ class Tenant {
         $this->room_number = $room_number;
     }
 
+    public function check_tenant() {
+        global $db;
+
+        $sql = 'select id from tenants where email = ?';
+        if(!$stmt = $db->query($sql))
+            return false;
+        $stmt->bind_param('s', $this->email);
+        if(!$stmt->execute())
+            return false;
+        $stmt->store_result();
+        if($stmt->num_rows < 1)
+            return false;
+        return true;
+    }
     public function add_tenant() {
         global $db;
 
@@ -44,6 +58,27 @@ class Tenant {
         $stmt->fetch();
         array_push($tenant_info, $this->id, $this->first_name, $this->last_name, $this->mobile_number, $this->room_number, $this->building_id);
         return $tenant_info;
+    }
+    public function get_tenants($building_id)
+    {
+        global $db;
+
+        $tenant = array();
+        $tenants = array();
+
+        $sql = "select id, email, room_number from tenants where building_id = ?";
+        if(!$stmt = $db->query($sql))
+            return false;
+        $stmt->bind_param('i', $building_id);
+        if(!$stmt->execute())
+            return false;
+        $stmt->bind_result($id, $email, $room_number);
+        while($stmt->fetch()) {
+            array_push($tenant, $id, $email, $room_number);
+            array_push($tenants, $tenant);
+            $tenant = array();
+        }
+        return $tenants;
     }
 }
 

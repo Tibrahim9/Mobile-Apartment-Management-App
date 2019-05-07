@@ -20,6 +20,20 @@ try {
     
     $option = isset($obj['option']) ? $obj['option'] : '';
 
+    if($option == 'check_tenant') {
+        $tenant = new Tenant($email);
+        if(!$tenant->check_tenant()) {
+            print json_encode([
+                'success' => false,
+                'message' => 'User is not a tenant'
+            ]);
+            exit;
+        }
+        print json_encode([
+            'success' => true
+        ]);
+        exit;
+    }
     if($option == 'add_tenant') {
         $tenant = new Tenant($email, $first_name, $last_name, $building_id, $mobile_number, $room_number);
         if(!$tenant->add_tenant()) {
@@ -50,7 +64,21 @@ try {
         ]);
         exit;
     }
-    
+    if($option == 'get_tenants') {
+        $tenant = new Tenant();
+        if(!$tenants = $tenant->get_tenants($building_id)) {
+            print json_encode([
+                'success' => false,
+                'message' => 'Failed to get list of tenants'
+            ]);
+            exit;
+        }
+        print json_encode([
+            'success' => true,
+            'tenants' => $tenants
+        ]);
+        exit;
+    }
 }
 catch(Exception $e) {
     print json_encode([
