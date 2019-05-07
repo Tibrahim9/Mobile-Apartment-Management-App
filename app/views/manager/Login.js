@@ -52,6 +52,11 @@ export class ManagerLogin extends React.Component {
                     onPress={ () => { Keyboard.dismiss(); this.props.navigation.push('HomeScreen'); } } >
                     <Text style={ styles.cancelButtonTextStyle }>Cancel</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    style={ styles.registerButton }
+                    onPress={ () => { Keyboard.dismiss(); this.props.navigation.push('ManagerCreateProfileScreen'); } } >
+                    <Text style={ styles.registerButtonText }>Register</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -128,13 +133,19 @@ const styles = StyleSheet.create({
     },
     loginButtonStyle: {
         borderRadius: 5,
-        backgroundColor: '#1d64b4',
+        backgroundColor: '#128ACC',
         marginBottom: 8,
         alignSelf: 'stretch'
     },
     cancelButtonStyle: {
         borderRadius: 5,
         backgroundColor: 'red',
+        marginBottom: 8,
+        alignSelf: 'stretch'
+    },
+    registerButton: {
+        borderRadius: 5,
+        backgroundColor: 'blue',
         alignSelf: 'stretch'
     },
     loginButtonTextStyle: {
@@ -146,6 +157,14 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     cancelButtonTextStyle: {
+        alignSelf: 'center',
+        fontSize: 16,
+        color: '#fff',
+        fontWeight: '600',
+        paddingBottom: 10,
+        paddingTop: 10
+    },
+    registerButtonText: {
         alignSelf: 'center',
         fontSize: 16,
         color: '#fff',

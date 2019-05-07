@@ -1,17 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
-export class TenantPayment extends React.Component {
+export class ManagerPayment extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            tenant_id: this.props.navigation.getParam('tenant_id', ''),
+            manager_id: this.props.navigation.getParam('manager_id', ''),
             email: this.props.navigation.getParam('email', ''),
             first_name: this.props.navigation.getParam('first_name', ''),
             last_name: this.props.navigation.getParam('last_name', ''),
             mobile_number: this.props.navigation.getParam('mobile_number', ''),
-            room_number: this.props.navigation.getParam('room_number', ''),
             building_id: this.props.navigation.getParam('building_id', '')
         }
     }
@@ -25,36 +24,34 @@ export class TenantPayment extends React.Component {
                     <TouchableOpacity
                         style={ styles.buttonStyle }
                         onPress={ () => {
-                            this.props.navigation.push('SubmitPaymentScreen', {
-                                tenant_id: this.state.tenant_id,
+                            this.props.navigation.push('PaymentRequestScreen', {
+                                manager_id: this.state.manager_id,
                                 email: this.state.email,
                                 first_name: this.state.first_name,
                                 last_name: this.state.last_name,
                                 mobile_number: this.state.mobile_number,
-                                room_number: this.state.room_number,
                                 building_id: this.state.building_id
                             });
                         }
                             }>
-                        <Text style={ styles.buttonTextStyle }>Make a Payment</Text>
+                        <Text style={ styles.buttonTextStyle }>Request a Payment</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={ styles.optionView }>
                     <TouchableOpacity
                         style={ styles.buttonStyle }
                         onPress={ () => {
-                            this.props.navigation.push('PaymentHistoryScreen', {
-                                tenant_id: this.state.tenant_id,
+                            this.props.navigation.push('PaymentEditScreen', {
+                                manager_id: this.state.manager_id,
                                 email: this.state.email,
                                 first_name: this.state.first_name,
                                 last_name: this.state.last_name,
                                 mobile_number: this.state.mobile_number,
-                                room_number: this.state.room_number,
                                 building_id: this.state.building_id
                             });
                         }
                             }>
-                        <Text style={ styles.buttonTextStyle }>View Payment History</Text>
+                        <Text style={ styles.buttonTextStyle }>Edit Payment</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 6 }}>

@@ -3,6 +3,24 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import firebase from 'firebase';
 
 export class TenantHome extends React.Component {
+    // static navigationOptions = {
+    //     headerRight: (
+    //         <TouchableOpacity
+    //             onPress={ () => this.props.navigation.push('MaintenanceScreen', {
+    //                 tenant_id: this.state.tenant_id,
+    //                 email: this.state.email,
+    //                 first_name: this.state.first_name,
+    //                 last_name: this.state.last_name,
+    //                 mobile_number: this.state.mobile_number,
+    //                 room_number: this.state.room_number,
+    //                 building_id: this.state.building_id
+    //         }) } >
+    //           <Image
+    //             style={{ marginRight: 8 }}
+    //             source={ require('../../images/home_icon.png') } />
+    //         </TouchableOpacity>
+    //     )
+    // };
     constructor(props) {
         super(props);
         this.state = {
@@ -16,10 +34,12 @@ export class TenantHome extends React.Component {
         };
         
     }
+    goHome = () => {
+        alert('test');
+    }
     componentWillMount() {
         // alert(this.state.email);
         return fetch('https://comp490.000webhostapp.com/public/tenants.php', {
-        // return fetch('http://apartment-app-comp490.com/public/tenants.php', {
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -58,15 +78,7 @@ export class TenantHome extends React.Component {
                 <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }}>
                     <Text style={ styles.titleTextStyle }>Hello { this.state.first_name }!</Text>
                     <TouchableOpacity
-                        onPress={ () => this.props.navigation.push('MaintenanceScreen', {
-                            tenant_id: this.state.tenant_id,
-                            email: this.state.email,
-                            first_name: this.state.first_name,
-                            last_name: this.state.last_name,
-                            mobile_number: this.state.mobile_number,
-                            room_number: this.state.room_number,
-                            building_id: this.state.building_id
-                        }) }
+                        // onPress={  }
                         style={{ alignSelf: 'center', marginRight: 16 }}>
                         <Image
                             source={ require('../../images/user-icon.png') } />
@@ -104,7 +116,7 @@ export class TenantHome extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
-                            onPress={ () => this.props.navigation.push('PaymentScreen', {
+                            onPress={ () => this.props.navigation.push('TenantPaymentScreen', {
                                 tenant_id: this.state.tenant_id,
                                 email: this.state.email,
                                 first_name: this.state.first_name,
@@ -131,27 +143,27 @@ export class TenantHome extends React.Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                   <View style={ styles.boxStyle }>
-                                                 <TouchableOpacity
-                                                     style={ styles.selectionStyle }
-                                                     onPress={ () => { this.props.navigation.navigate('MyChatScreen') } } >
-                                                     <Text style={{
-                                                         alignSelf: 'stretch',
-                                                         fontSize: 20,
-                                                         padding: 4,
-                                                         backgroundColor: '#FFF',
-                                                         textAlign: 'center',
-                                                         color: '#fff',
-                                                         backgroundColor: '#3796E3',
-                                                         borderTopLeftRadius: 7,
-                                                         borderTopRightRadius: 7
-                                                     }}>Chat</Text>
-                                                     <View style={{ height: '100%', width: '100%' }}>
-                                                         <Image
-                                                             source={ require('../../images/chat-image.jpg') }
-                                                             style={ styles.selectionImage } />
-                                                     </View>
-                                                 </TouchableOpacity>
+                    <View style={ styles.boxStyle }>
+                        <TouchableOpacity
+                            style={ styles.selectionStyle }
+                            onPress={ () => {alert("pressed")} } >
+                            <Text style={{
+                                alignSelf: 'stretch',
+                                fontSize: 20,
+                                padding: 4,
+                                backgroundColor: '#FFF',
+                                textAlign: 'center',
+                                color: '#fff',
+                                backgroundColor: '#3796E3',
+                                borderTopLeftRadius: 7,
+                                borderTopRightRadius: 7
+                            }}>Chat</Text>
+                            <View style={{ height: '100%', width: '100%' }}>
+                                <Image
+                                    source={ require('../../images/chat-image.jpg') }
+                                    style={ styles.selectionImage } />
+                            </View>
+                        </TouchableOpacity>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
                             onPress={ () => this.props.navigation.push('InformationScreen', {
@@ -187,17 +199,6 @@ export class TenantHome extends React.Component {
                         style={ styles.buttonStyle }
                         onPress={ () => firebase.auth().signOut().then(() => { this.props.navigation.navigate('HomeScreen') }) } >
                         <Text style={ styles.buttonTextStyle }>Logout</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            borderRadius: 5,
-                            backgroundColor: '#fff',
-                            marginBottom: 8
-                        }}
-                        onPress={ () => this.props.navigation.push('MaintenanceRequestListScreen', {
-                            email: this.state.email
-                        }) } >
-                        <Text style={ styles.buttonTextStyle }>Manager Request</Text>
                     </TouchableOpacity>
                 </View>
             </View>

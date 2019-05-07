@@ -12,10 +12,50 @@ export class Home extends React.Component {
     componentWillMount() {
         firebase.auth().onAuthStateChanged(user => {
             // alert(user.email);
+            // if user is logged in, check if they are a tenant or manager
             if(user) {
-                this.props.navigation.push('TenantHomeScreen', {
-                    email: user.email
-                });
+                // check if user is tenant
+                return fetch('https://comp490.000webhostapp.com/public/tenants.php', {
+                    method: 'POST',
+                    header: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: user.email,
+                        option: 'check_tenant'
+                    })
+                })
+                .then(response => response.json())
+                .then(responseJson => {
+                    if(responseJson.success) {
+                        this.props.navigation.push('TenantHomeScreen', {
+                            email: user.email
+                        });
+                    }
+                    // check if user is manager
+                    return fetch('https://comp490.000webhostapp.com/public/managers.php', {
+                        method: 'POST',
+                        header: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: user.email,
+                            option: 'check_manager'
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(responseJson => {
+                        if(responseJson.success) {
+                            this.props.navigation.push('ManagerHomeScreen', {
+                                email: user.email
+                            });
+                        }
+                    })
+                    .catch(error => console.warn(error));
+                })
+                .catch(error => console.warn(error));
             }
         });
     }
@@ -43,7 +83,7 @@ export class Home extends React.Component {
                     <View style={ styles.buttonContainer }>
                         <TouchableOpacity
                             style={ styles.button }
-                            onPress={() => this.props.navigation.navigate('LoginScreen')}>
+                            onPress={() => this.props.navigation.navigate('TenantLoginScreen')}>
                             <Text style={ styles.buttonText }>LOGIN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -52,7 +92,7 @@ export class Home extends React.Component {
                             <Text style={ styles.buttonText }>REGISTER</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={ styles.button }
+                            style={ styles.managerButton }
                             onPress={() => this.props.navigation.navigate('ManagerLoginScreen')}>
                             <Text style={ styles.buttonText }>MANAGER</Text>
                         </TouchableOpacity>
@@ -70,6 +110,13 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#1d64b4',
+        width: 200,
+        padding: 20,
+        margin: 2,
+        borderRadius: 10
+    },
+    managerButton: {
+        backgroundColor: '#128ACC',
         width: 200,
         padding: 20,
         margin: 2,

@@ -35,7 +35,7 @@ export class PaymentHistory extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                option: 'view_payments',
+                option: 'view_payment_history',
                 tenant_id: this.state.tenant_id
             })
         })
@@ -77,7 +77,7 @@ export class PaymentHistory extends React.Component {
         return this.state.payments.map((payment, index) => {
             switch(payment[4]){
                 case 1:
-                    status = 'Submitted';
+                    status = 'Payment Due';
                     break;
                 case 2:
                     status = 'Pending';
@@ -173,7 +173,7 @@ export class PaymentHistory extends React.Component {
                 <View style={ styles.buttonContainer }>
                     <TouchableOpacity
                         style={ styles.buttonStyle }
-                        onPress={ () => this.props.navigation.push('TenantHomeScreen', {
+                        onPress={ () => this.props.navigation.push('SubmitPaymentScreen', {
                             tenant_id: this.state.tenant_id,
                             email: this.state.email,
                             first_name: this.state.first_name,
@@ -189,7 +189,7 @@ export class PaymentHistory extends React.Component {
                             marginBottom: 8,
                             alignSelf: 'stretch'
                         }}
-                        onPress={ () => this.props.navigation.push('PaymentScreen', {
+                        onPress={ () => this.props.navigation.push('TenantPaymentScreen', {
                             tenant_id: this.state.tenant_id,
                             email: this.state.email,
                             first_name: this.state.first_name,

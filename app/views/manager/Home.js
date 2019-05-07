@@ -6,20 +6,18 @@ export class ManagerHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tenant_id: 0,
+            manager_id: 0,
             email: this.props.navigation.getParam('email', ''),
             first_name: '',
             last_name: '',
             mobile_number: 0,
-            room_number: 0,
             building_id: 0
         };
         
     }
     componentWillMount() {
         // alert(this.state.email);
-        return fetch('https://comp490.000webhostapp.com/public/tenants.php', {
-        // return fetch('http://apartment-app-comp490.com/public/tenants.php', {
+        return fetch('https://comp490.000webhostapp.com/public/managers.php', {
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -27,7 +25,7 @@ export class ManagerHome extends React.Component {
             },
             body: JSON.stringify({
                 email: this.state.email,
-                option: 'get_tenant_info'
+                option: 'get_manager_info'
             })
         })
         .then(response => response.json())
@@ -36,12 +34,11 @@ export class ManagerHome extends React.Component {
                 console.log(responseJson.message)
             console.log(responseJson);
             this.setState({
-                tenant_id: responseJson.tenant_info[0],
-                first_name: responseJson.tenant_info[1],
-                last_name: responseJson.tenant_info[2],
-                mobile_number: responseJson.tenant_info[3],
-                room_number: responseJson.tenant_info[4],
-                building_id: responseJson.tenant_info[5]
+                manager_id: responseJson.manager_info[0],
+                first_name: responseJson.manager_info[1],
+                last_name: responseJson.manager_info[2],
+                mobile_number: responseJson.manager_info[3],
+                building_id: responseJson.manager_info[4]
             });
         })
         .catch(error => console.warn(error));
@@ -55,20 +52,36 @@ export class ManagerHome extends React.Component {
                 {/* <Image
                     source={ require('../images/tenant-home-background-image.jpg') }
                     style={ styles.mainImage } /> */}
-                <View style={{ flex: 1, justifyContent: 'center' }}>
+                {/* <View style={{ flex: 1, justifyContent: 'center' }}>
                     <Text style={ styles.titleTextStyle }>Hello { this.state.first_name }!</Text>
+                </View> */}
+                <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }}>
+                    <Text style={ styles.titleTextStyle }>Hello { this.state.first_name }!</Text>
+                    <TouchableOpacity
+                        // onPress={ () => this.props.navigation.push('MaintenanceScreen', {
+                        //     manager_id: this.state.manager_id,
+                        //     email: this.state.email,
+                        //     first_name: this.state.first_name,
+                        //     last_name: this.state.last_name,
+                        //     mobile_number: this.state.mobile_number,
+                        //     room_number: this.state.room_number,
+                        //     building_id: this.state.building_id
+                        // }) }
+                        style={{ alignSelf: 'center', marginRight: 16 }}>
+                        <Image
+                            source={ require('../../images/user-manager-icon.png') } />
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 6 }}>
                     <View style={ styles.boxStyle }>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
-                            onPress={ () => this.props.navigation.push('MaintenanceScreen', {
-                                tenant_id: this.state.tenant_id,
+                            onPress={ () => this.props.navigation.push('MaintenanceEditScreen', {
+                                manager_id: this.state.manager_id,
                                 email: this.state.email,
                                 first_name: this.state.first_name,
                                 last_name: this.state.last_name,
                                 mobile_number: this.state.mobile_number,
-                                room_number: this.state.room_number,
                                 building_id: this.state.building_id
                             }) } >
                             <Text style={{
@@ -90,13 +103,12 @@ export class ManagerHome extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
-                            onPress={ () => this.props.navigation.push('PaymentScreen', {
-                                tenant_id: this.state.tenant_id,
+                            onPress={ () => this.props.navigation.push('ManagerPaymentScreen', {
+                                manager_id: this.state.manager_id,
                                 email: this.state.email,
                                 first_name: this.state.first_name,
                                 last_name: this.state.last_name,
                                 mobile_number: this.state.mobile_number,
-                                room_number: this.state.room_number,
                                 building_id: this.state.building_id
                             }) } >
                             <Text style={{
@@ -140,7 +152,15 @@ export class ManagerHome extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={ styles.selectionStyle }
-                            onPress={ () => {alert("pressed")} } >
+                            onPress={ () => this.props.navigation.push('InformationScreen', {
+                                tenant_id: this.state.tenant_id,
+                                email: this.state.email,
+                                first_name: this.state.first_name,
+                                last_name: this.state.last_name,
+                                mobile_number: this.state.mobile_number,
+                                room_number: this.state.room_number,
+                                building_id: this.state.building_id
+                            }) } >
                             <Text style={{
                                 alignSelf: 'stretch',
                                 fontSize: 20,
@@ -165,17 +185,6 @@ export class ManagerHome extends React.Component {
                         style={ styles.buttonStyle }
                         onPress={ () => firebase.auth().signOut().then(() => { this.props.navigation.navigate('HomeScreen') }) } >
                         <Text style={ styles.buttonTextStyle }>Logout</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            borderRadius: 5,
-                            backgroundColor: '#fff',
-                            marginBottom: 8
-                        }}
-                        onPress={ () => this.props.navigation.push('MaintenanceRequestListScreen', {
-                            email: this.state.email
-                        }) } >
-                        <Text style={ styles.buttonTextStyle }>Manager Request</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -219,8 +228,11 @@ const styles = StyleSheet.create({
     },
     titleTextStyle: {
         alignSelf: 'center',
+        textAlign: 'center',
         padding: 12,
-        fontSize: 24
+        marginLeft: 8,
+        fontSize: 24,
+        flexGrow: 1
     },
     buttonContainer: {
         margin: 8,

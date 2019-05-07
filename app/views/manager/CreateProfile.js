@@ -3,12 +3,12 @@ import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity, ActivityInd
 import firebase from 'firebase';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-export class TenantCreateProfile extends React.Component {
+export class ManagerCreateProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mobile_number: this.props.navigation.getParam('mobile_number', 0),
-            room_number: this.props.navigation.getParam('room_number', 0),
+            // mobile_number: this.props.navigation.getParam('mobile_number', 0),
+            // room_number: this.props.navigation.getParam('room_number', 0),
             first_name: '',
             last_name: '',
             email: '',
@@ -17,7 +17,9 @@ export class TenantCreateProfile extends React.Component {
             confirm_password: '',
             confirm_password_error: '',
             loading: null,
-            error: ''
+            error: '',
+            mobile_number: null,
+            mobile_number_error: '',
         }
     }
     createProfile = () => {
@@ -40,8 +42,7 @@ export class TenantCreateProfile extends React.Component {
         }
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => {
-                return fetch('https://comp490.000webhostapp.com/public/tenants.php', {
-                // return fetch('http://apartment-app-comp490.com/public/tenants.php', {
+                return fetch('https://comp490.000webhostapp.com/public/managers.php', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -49,19 +50,18 @@ export class TenantCreateProfile extends React.Component {
                     },
                     body: JSON.stringify({
                         mobile_number: this.state.mobile_number,
-                        room_number: this.state.room_number,
                         first_name: this.state.first_name,
                         last_name: this.state.last_name,
                         email: this.state.email,
                         building_id: 1,
-                        option: 'add_tenant'
+                        option: 'add_manager'
                     })
                 })
                 .then(response => response.json())
                 .then(responseJson => {
                     if(responseJson.success) {
                         this.setState({ loading: false });
-                        this.props.navigation.push('TenantHomeScreen', {
+                        this.props.navigation.push('ManagerHomeScreen', {
                             email: this.state.email
                         });
                     }
@@ -138,7 +138,7 @@ export class TenantCreateProfile extends React.Component {
                             <TextInput
                                 ref={ input => this.email = input }
                                 returnKeyType='next'
-                                onSubmitEditing={ () => this.password.focus() }
+                                onSubmitEditing={ () => this.mobile_number.focus() }
                                 blurOnSubmit={ false }
                                 keyboardType='email-address'
                                 style={ styles.inputStyle }
@@ -151,6 +151,30 @@ export class TenantCreateProfile extends React.Component {
                                     else
                                         this.setState({ email: text, email_error: 'Invalid email!' })
                                 } } />
+                        </View>
+                        <View style={ styles.inputContainer }>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={ styles.inputTextStyle }>Mobile Number</Text>
+                                <Text style={{ marginLeft: 8, fontSize: 12, alignSelf: 'center', color: '#f00' }}>{ this.state.mobile_number_error }</Text>
+                            </View>
+                            <TextInput
+                                ref={ input => this.mobile_number = input }
+                                placeholder='e.g. 8005551234'
+                                returnKeyType='next'
+                                onSubmitEditing={ () => this.password.focus() }
+                                blurOnSubmit={ false }
+                                textContentType='telephoneNumber'
+                                keyboardType='numeric'
+                                underlineColorAndroid='transparent'
+                                autoCorrect={ false }
+                                onChangeText={ text => {
+                                    let mobile_number_format = /^\d{10,11}$/;
+                                    if(text.match(mobile_number_format))
+                                        this.setState({ mobile_number: text, mobile_number_error: '' });
+                                    else
+                                        this.setState({ mobile_number: text, mobile_number_error: 'Invalid mobile number' });
+                                } }
+                                style={ styles.inputStyle } />
                         </View>
                         <View style={ styles.inputContainer }>
                             <View style={{ flexDirection: 'row' }}>

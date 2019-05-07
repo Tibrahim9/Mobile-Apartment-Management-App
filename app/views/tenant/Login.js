@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator, Keyboard } from 'react-native';
 import firebase from 'firebase';
 
-export class Login extends React.Component {
+export class TenantLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +19,6 @@ export class Login extends React.Component {
                     email: this.state.email
                 });
             }
-                // this.setState({ loggedIn: false });
         });
     }
     onLoginPress = () => {

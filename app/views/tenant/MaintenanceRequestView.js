@@ -36,8 +36,13 @@ export class MaintenanceRequestView extends React.Component {
             })
             .then(response => response.json())
             .then(responseJson => {
-                if(!responseJson.success)
+                if(!responseJson.success) {
                     console.warn(responseJson.message);
+                    this.setState({
+                        openRequestLoading: false,
+                        previousRequestLoading: false
+                    });
+                }
                 else {
                     console.log(responseJson);
                     this.setState({
@@ -48,7 +53,13 @@ export class MaintenanceRequestView extends React.Component {
                     });
                 }
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                this.setState({
+                    openRequestLoading: false,
+                    previousRequestLoading: false
+                });
+                console.log(error)
+            });
     }
     renderOpenRequests = () => {
         if(this.state.openRequestLoading) {
